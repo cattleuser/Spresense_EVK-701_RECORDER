@@ -5,8 +5,9 @@ Data logger for Sony's IoT computer SPRESENSE.
 There is a function to write data such as inertia sensor and time stamp to the SD card.
 The time is corrected with the GPS signal.
 
-# What's new
-* このソフトウェアの特徴
+# Features
+* GPS同期
+* 毎秒25Hzなどの要件
 
 **Required devices**
 * SPRESENSE(https://developer.sony.com/ja/develop/spresense/)
