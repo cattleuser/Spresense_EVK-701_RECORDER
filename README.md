@@ -22,3 +22,7 @@ We cannot respond to inquiries.
 * 1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)
 * 2.T.B.D
 * 3.T.B.D
+
+# Referense
+* https:XXXXX/XXXXX
+* T.B.D
