@@ -1,6 +1,9 @@
-# RoKiX-IoT-Platform
+# Overview
 
-The RoKiX IoT Platform is the leading Internet of Things (IoT) technology platform. It enables innovators to rapidly create, deploy and evaluate various IoT applications, ranging from consumer IoT applications such as wearables, health, wellness, games, toys, and smart home to Industrial IoT applications such as smart city sensor networks, asset management and logistics monitoring, factory automation, etc.
+Available in Arduino development environment.
+Data logger for Sony's IoT computer SPRESENSE.
+There is a function to write data such as inertia sensor and time stamp to the SD card.
+The time is corrected with the GPS signal.
  
 **Features**
 * Removing complexity from IoT applications development
