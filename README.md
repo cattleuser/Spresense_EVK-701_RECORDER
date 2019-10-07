@@ -12,3 +12,8 @@ The time is corrected with the GPS signal.
 **Source of code**
 * SPRESENSE(https://github.com/sonydevworld/spresense)
 * SPRESENSE-SENSOR-EVK-701(https://github.com/RohmSemiconductor/Arduino)
+
+# Disclaimer
+
+This software is MIT license.
+We cannot respond to inquiries.
