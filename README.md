@@ -25,4 +25,5 @@ We cannot respond to inquiries.
 
 # Referense
 * https:XXXXX/XXXXX
+* TeraTerm
 * T.B.D
