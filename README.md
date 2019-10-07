@@ -11,7 +11,9 @@ The time is corrected with the GPS signal.
 
 **Source of code**
 * SPRESENSE(https://github.com/sonydevworld/spresense)
+参考にしたサンプルはXXXXです。
 * SPRESENSE-SENSOR-EVK-701(https://github.com/RohmSemiconductor/Arduino)
+参考にしたサンプルはXXXXです。
 
 # Disclaimer
 
@@ -22,6 +24,8 @@ We cannot respond to inquiries.
 * 1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)
 * 2.T.B.D
 * 3.T.B.D
+* 4.Data Format is XXXXX
+* 5.
 
 # Referense
 * https:XXXXX/XXXXX
