@@ -17,3 +17,8 @@ The time is corrected with the GPS signal.
 
 This software is MIT license.
 We cannot respond to inquiries.
+
+# How to use
+* 1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)
+* 2.T.B.D
+* 3.T.B.D
