@@ -10,8 +10,8 @@ The time is corrected with the GPS signal.
 * SPRESENSE-SENSOR-EVK-701(https://www.rohm.co.jp/support/spresense-add-on-board)
 
 **Source of code**
-* SPRESENSE(https://github.com/sonydevworld/spresense)
-参考にしたサンプルはXXXXです。
+* spresense-arduino-compatible(https://github.com/sonydevworld/spresense-arduino-compatible)
+上記の説明参考にしたサンプルはXXXXです。
 * SPRESENSE-SENSOR-EVK-701(https://github.com/RohmSemiconductor/Arduino)
 参考にしたサンプルはXXXXです。
 
