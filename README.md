@@ -31,7 +31,7 @@ The referenced sample is as follows.
 * The unit of air pressure to be acquired is [hPa].
 * Does not drive interrupts.
 
-https://github.com/cowuser/Spresense_EVK-701_RECORDER/issues/1#issuecomment-540547530
+![isos7j00000003du](https://user-images.githubusercontent.com/49668780/66568316-289c3300-eba4-11e9-9aa8-4b312bd60d44.jpg)
 
 # Disclaimer
 * This software is MIT license.
