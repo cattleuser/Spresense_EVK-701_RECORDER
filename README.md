@@ -15,10 +15,10 @@ The referenced sample is as follows.
 
 * SPRESENSE-SENSOR-EVK-701(https://github.com/RohmSemiconductor/Arduino)  
 The referenced sample is as follows.  
-  -BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
+-BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
 
 * The code created for this project is as follows.  
-  -cow_log.h/sd_acc_press_gps.ino
+-cow_log.h/sd_acc_press_gps.ino
 
 # Features
 * A new file is created every 30 minutes.
@@ -54,11 +54,11 @@ The data stored on the SD card is in the following format.
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 
 # How to use
-* 1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)
-* 2.T.B.D
-* 3.T.B.D
-* 4.Data Format is XXXXX
-* 5.
+1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)
+1.Connect CXD5602PWBEXT1 and SPRESENSE-SENSOR-EVK-701 to SPRESENSE.
+1.Connect the SD card to CXD5602PWBEXT1.
+1.When the power is turned on, the device starts up and logs are stored on the SD card.
+1.Turn off the power and remove the SD card.
 
 # Referense
 * https:XXXXX/XXXXX
