@@ -36,8 +36,9 @@ The referenced sample is as follows.
 
 # State transition
 The software performs the following state transitions: The LED corresponding to the status lights up.  
-|:---|:---|:---|:---|:---|:---|
+
 | State | Meaning | LED3 | LED2 | LED1 | LED0 |
+|:---|:---|:---|:---|:---|:---|
 | eStateIdle | System idle state | off | off | on | blinking |
 | eStateSetup | Setup state | off | on | off | off |
 | eStateRenewFile | File update status | off | on | on | blinking |
@@ -48,8 +49,9 @@ The software performs the following state transitions: The LED corresponding to 
 
 # Data format
 The data stored on the SD card is in the following format.  
-|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+
 | flag | Terminal number | hh:mm:ss.ss | Serial number | interval[ms] | Acc-X[G] | Acc-Y[G] | Acc-Z[G] | Barometric pressure[hPa] |
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|
 
 # How to use
 * 1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)
