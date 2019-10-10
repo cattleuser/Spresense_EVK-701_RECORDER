@@ -55,10 +55,10 @@ The data stored on the SD card is in the following format.
 
 # How to use
 1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)  
-1.Connect CXD5602PWBEXT1 and SPRESENSE-SENSOR-EVK-701 to SPRESENSE.  
-1.Connect the SD card to CXD5602PWBEXT1.  
-1.When the power is turned on, the device starts up and logs are stored on the SD card.  
-1.Turn off the power and remove the SD card.  
+2.Connect CXD5602PWBEXT1 and SPRESENSE-SENSOR-EVK-701 to SPRESENSE.  
+3.Connect the SD card to CXD5602PWBEXT1.  
+4.When the power is turned on, the device starts up and logs are stored on the SD card.  
+5.Turn off the power and remove the SD card.  
 
 # Referense
 * https:XXXXX/XXXXX
