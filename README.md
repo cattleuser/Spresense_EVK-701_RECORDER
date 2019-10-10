@@ -61,6 +61,6 @@ The data stored on the SD card is in the following format.
 5.Turn off the power and remove the SD card.  
 
 # Referense
-* https:XXXXX/XXXXX
-* TeraTerm
-* T.B.D
+* Try Spresense's GNSS (GPS) reception function(https://y2lab.org/blog/gudget/trying-gnss-receiving-function-on-spresence-7497/)
+* Tera Term Home Page(https://ttssh2.osdn.jp/)
+* Play with RaspBerry Pi(http://nopnop2002.webcrow.jp/)
