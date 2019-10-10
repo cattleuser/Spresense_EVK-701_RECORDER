@@ -1,6 +1,6 @@
 /**
- * @file cow_log_sys.ino
- * @author TokyoTech & Technopro
+ * @file sd_acc_press_gps.ino
+ * @author Technopro
  * @brief Save cow acceleration to SD card.
  * @details It is a sketch for recording the behavior of the cow.
  */
