@@ -15,10 +15,10 @@ The referenced sample is as follows.
 
 * SPRESENSE-SENSOR-EVK-701(https://github.com/RohmSemiconductor/Arduino)  
 The referenced sample is as follows.  
--BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
+  -BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
 
 * The code created for this project is as follows.  
--cow_log.h/sd_acc_press_gps.ino
+  -cow_log.h/sd_acc_press_gps.ino
 
 # Features
 * A new file is created every 30 minutes.
