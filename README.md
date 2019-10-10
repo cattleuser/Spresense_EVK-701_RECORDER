@@ -49,7 +49,6 @@ The software performs the following state transitions: The LED corresponding to 
 # Data format
 The data stored on the SD card is in the following format.
 | flag | Terminal number | hh:mm:ss.ss | Serial number | interval[ms] | Acc-X[G] | Acc-Y[G] | Acc-Z[G] | Barometric pressure[hPa] |
-|:---|:---|:---|:---|:---|:---|:---|:---|:---|
 
 # How to use
 * 1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)
