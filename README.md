@@ -23,6 +23,7 @@ The referenced sample is as follows.
 # Features
 * A new file is created every 30 minutes.
 * After creating a new file, correct the RTC time with the GPS signal before starting sensing.
+* Compatibility with QZSS Mibiki.
 * The sensing data is stored in the SD card slot of CXD5602PWBEXT1.
 * Data logging will not start until the RTC time correction using the GPS signal is complete. An accurate record of the time remains.
 * The recorded acceleration and pressure are 25 [Hz] intervals.
@@ -54,7 +55,7 @@ The data stored on the SD card is in the following format.
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 
 # How to use
-1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)  
+1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/).  
 2.Connect CXD5602PWBEXT1 and SPRESENSE-SENSOR-EVK-701 to SPRESENSE.  
 3.Connect the SD card to CXD5602PWBEXT1.  
 4.When the power is turned on, the device starts up and logs are stored on the SD card.  
