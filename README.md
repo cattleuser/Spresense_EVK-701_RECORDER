@@ -18,6 +18,8 @@ gnss_file.h/gnss_file.cpp/gnss_nmea.h/gnss_nmea.cpp/gnss_tracker.h
 The referenced sample is as follows.
 BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
 
+* The newly created files for this project are:cow_log.h/sd_acc_press_gps.ino
+
 # Features
 * GPS同期
 * 毎秒25Hzなどの要件
