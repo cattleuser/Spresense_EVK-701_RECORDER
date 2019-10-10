@@ -11,9 +11,12 @@ The time is corrected with the GPS signal.
 
 **Source of code**
 * spresense-arduino-compatible(https://github.com/sonydevworld/spresense-arduino-compatible)
-上記の説明参考にしたサンプルはXXXXです。
+The referenced sample is as follows.
+gnss_file.h/gnss_file.cpp/gnss_nmea.h/gnss_nmea.cpp/gnss_tracker.h
+
 * SPRESENSE-SENSOR-EVK-701(https://github.com/RohmSemiconductor/Arduino)
-参考にしたサンプルはXXXXです。
+The referenced sample is as follows.
+BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
 
 # Features
 * GPS同期
