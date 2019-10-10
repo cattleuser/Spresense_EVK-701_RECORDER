@@ -34,6 +34,17 @@ The referenced sample is as follows.
 * This software is MIT license.
 * We cannot respond to inquiries.
 
+# State transition
+| State | Meaning | LED3 | LED2 | LED1 | LED0 |
+|:---|:---|:---|:---|:---|:---|
+| eStateIdle | System idle state | off | off | on | blinking |
+| eStateSetup | Setup state | off | on | off | off |
+| eStateRenewFile | File update status | off | on | on | blinking |
+| eStateGnss | GPS time data correction status | on | off | off | blinking |
+| eStateSensor | Sensor data acquisition status | on | off | on | blinking |
+| eStateError | Error occurred | on | on | off | hold |
+| eStateWriteError | Write error occurred | on | on | on | hold |
+
 # How to use
 * 1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/)
 * 2.T.B.D
