@@ -11,6 +11,7 @@ The time is corrected with the GPS signal.
 **Source of code**
 * spresense-arduino-compatible(https://github.com/sonydevworld/spresense-arduino-compatible)  
 The referenced sample is as follows.  
+./tree/master/Arduino15/packages/SPRESENSE/hardware/spresense/1.0.0/libraries/GNSS/examples/gnss_tracker/  
 -gnss_file.h/gnss_file.cpp/gnss_nmea.h/gnss_nmea.cpp/gnss_tracker.h
 
 * SPRESENSE-SENSOR-EVK-701(https://github.com/RohmSemiconductor/Arduino)  
