@@ -12,14 +12,14 @@ The time is corrected with the GPS signal.
 * spresense-arduino-compatible(https://github.com/sonydevworld/spresense-arduino-compatible)  
 The referenced sample is as follows.  
 ./Arduino15/packages/SPRESENSE/hardware/spresense/1.0.0/libraries/GNSS/examples/gnss_tracker  
-+ /gnss_file.h/gnss_file.cpp/gnss_nmea.h/gnss_nmea.cpp/gnss_tracker.h
+  * /gnss_file.h/gnss_file.cpp/gnss_nmea.h/gnss_nmea.cpp/gnss_tracker.h
 
 * SPRESENSE-SENSOR-EVK-701(https://github.com/RohmSemiconductor/Arduino)  
 The referenced sample is as follows.  
-+ /BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
+  * /BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
 
 * The code created for this project is as follows.  
-+ /cow_log.h/sd_acc_press_gps.ino
+  * /cow_log.h/sd_acc_press_gps.ino
 
 # Features
 * A new file is created every 30 minutes.
@@ -59,11 +59,11 @@ The data stored on the SD card is in the following format.
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 
 # How to use
-1.Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/).  
-2.Connect CXD5602PWBEXT1 and SPRESENSE-SENSOR-EVK-701 to SPRESENSE.  
-3.Connect the SD card to CXD5602PWBEXT1.  
-4.When the power is turned on, the device starts up and logs are stored on the SD card.  
-5.Turn off the power and remove the SD card.  
+1. Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/).  
+1. Connect CXD5602PWBEXT1 and SPRESENSE-SENSOR-EVK-701 to SPRESENSE.  
+1. Connect the SD card to CXD5602PWBEXT1.  
+1. When the power is turned on, the device starts up and logs are stored on the SD card.  
+1. Turn off the power and remove the SD card.  
 
 # Referense
 * Try Spresense's GNSS (GPS) reception function(https://y2lab.org/blog/gudget/trying-gnss-receiving-function-on-spresence-7497/)
