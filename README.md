@@ -39,7 +39,7 @@ The referenced sample is as follows.
 # Quasi-Zenith Satellite Orbit
 QZSS which complements GPS is a system especially for usage in the Asia-Oceania regions, with a focus on Japan.
 
-![isos7j00000003du](https://user-images.githubusercontent.com/49668780/66568620-ca238480-eba4-11e9-9387-fcfcd4ab10a6.jpg)
+![isos7j00000003du](https://user-images.githubusercontent.com/49668780/66568620-ca238480-eba4-11e9-9387-fcfcd4ab10a6.jpg)  
 Source : https://qzss.go.jp/en/technical/technology/orbit.html
 
 # Disclaimer
