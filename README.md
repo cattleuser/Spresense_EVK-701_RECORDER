@@ -23,14 +23,17 @@ The referenced sample is as follows.
 
 # Features
 * A new file is created every 30 minutes.
-* After creating a new file, correct the RTC time with the GPS signal before starting sensing.
-* Compatibility with QZSS Mibiki.
+* After creating a new file, correct the RTC time with the GPS signal before data logging.
+* Compatibility with QZSS Michibiki.
 * The sensing data is stored in the SD card slot of CXD5602PWBEXT1.
 * Data logging will not start until the RTC time correction using the GPS signal is complete. An accurate record of the time remains.
-* The recorded acceleration and pressure are 25 [Hz] intervals.
+* The recorded acceleration and pressure are 40 [ms] intervals.
 * The maximum acceleration to be acquired is ± 4 [G] and the resolution is 1 [mG].
 * The unit of air pressure to be acquired is [hPa].
 * Does not drive interrupts.
+
+# Quasi-Zenith Satellite Orbit
+QZSS—which complements GPS is a system especially for usage in the Asia-Oceania regions, with a focus on Japan.
 
 ![isos7j00000003du](https://user-images.githubusercontent.com/49668780/66568620-ca238480-eba4-11e9-9387-fcfcd4ab10a6.jpg)
 Source:https://qzss.go.jp/en/technical/technology/orbit.html
@@ -62,10 +65,12 @@ The data stored on the SD card is in the following format.
 1. Set up SPRESENSE Arduino IDE according to (https://developer.sony.com/ja/develop/spresense/).  
 1. Connect CXD5602PWBEXT1 and SPRESENSE-SENSOR-EVK-701 to SPRESENSE.  
 1. Connect the SD card to CXD5602PWBEXT1.  
-1. When the power is turned on, the device starts up and logs are stored on the SD card.  
+1. When the power is turned on, the device starts up, the time is corrected by GPS, and the log is saved on the SD card.  
 1. Turn off the power and remove the SD card.  
 
-# Referense
+# Reference website
 * Try Spresense's GNSS (GPS) reception function(https://y2lab.org/blog/gudget/trying-gnss-receiving-function-on-spresence-7497/)
-* Tera Term Home Page(https://ttssh2.osdn.jp/)
 * Play with RaspBerry Pi(http://nopnop2002.webcrow.jp/)
+
+# Tools
+* Tera Term Home Page(https://ttssh2.osdn.jp/)
