@@ -6,19 +6,19 @@ The time is corrected with the GPS signal.
 
 **Required devices**
 * SPRESENSE+CXD5602PWBEXT1  
-(https://developer.sony.com/ja/develop/spresense/)
+https://developer.sony.com/ja/develop/spresense/
 * SPRESENSE-SENSOR-EVK-701  
-(https://www.rohm.co.jp/support/spresense-add-on-board)
+https://www.rohm.co.jp/support/spresense-add-on-board
 
 **Source of code**
 * spresense-arduino-compatible  
-(https://github.com/sonydevworld/spresense-arduino-compatible)  
+https://github.com/sonydevworld/spresense-arduino-compatible  
 The referenced sample is as follows.  
 ./Arduino15/packages/SPRESENSE/hardware/spresense/1.0.0/libraries/GNSS/examples/gnss_tracker  
   * /gnss_file.h/gnss_file.cpp/gnss_nmea.h/gnss_nmea.cpp/gnss_tracker.h
 
 * SPRESENSE-SENSOR-EVK-701  
-(https://github.com/RohmSemiconductor/Arduino)  
+https://github.com/RohmSemiconductor/Arduino  
 The referenced sample is as follows.  
   * /BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
 
@@ -66,8 +66,8 @@ The data stored on the SD card is in the following format.
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 
 # How to use
-1. Set up SPRESENSE Arduino IDE is as follows  
-(https://developer.sony.com/ja/develop/spresense/).  
+1. Set up SPRESENSE Arduino IDE is as follows.  
+https://developer.sony.com/ja/develop/spresense/  
 1. Connect CXD5602PWBEXT1 and SPRESENSE-SENSOR-EVK-701 to SPRESENSE.  
 1. Connect the SD card to CXD5602PWBEXT1.  
 1. When the power is turned on, the device starts up, the time is corrected by GPS, and the log is saved on the SD card.  
@@ -75,10 +75,10 @@ The data stored on the SD card is in the following format.
 
 # Reference website
 * Try Spresense's GNSS (GPS) reception function  
-(https://y2lab.org/blog/gudget/trying-gnss-receiving-function-on-spresence-7497/)
+https://y2lab.org/blog/gudget/trying-gnss-receiving-function-on-spresence-7497/
 * Play with RaspBerry Pi  
-(http://nopnop2002.webcrow.jp/)
+http://nopnop2002.webcrow.jp/
 
 # Tools
 * Tera Term Home Page  
-(https://ttssh2.osdn.jp/)
+https://ttssh2.osdn.jp/
