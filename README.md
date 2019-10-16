@@ -11,6 +11,7 @@ The time is corrected with the GPS signal.
 * The unit of air pressure to be acquired is [hPa].
 * After creating a new file, correct the RTC time with the GPS signal before data logging.
 * Data logging will not start until the RTC time correction using the GPS signal is complete. An accurate record of the time remains.
+* When the time is corrected, the GPS reception process stops. The GPS reception process will sleep until the next time adjustment.
 * The sensing data is stored in the SD card slot of CXD5602PWBEXT1.
 * A new file is created every 30 minutes.
 * Does not drive interrupts.
