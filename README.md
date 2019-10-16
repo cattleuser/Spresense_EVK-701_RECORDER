@@ -1,23 +1,22 @@
 # Overview
 Available in Arduino development environment.
-Data logger for Sony's IoT computer SPRESENSE.
-There is a function to write data such as inertia sensor and time stamp to the SD card.
-The time is corrected with the GPS signal.
+Data logger for Sony's IoT development board SPRESENSE.
+The function of this data logger is to write inertia sensor data along with time stamp. Time stamp data is corrected with GPS signal.
 
 # Features
 * Compatibility with QZSS Michibiki.
-* The recorded acceleration and pressure are 40 [ms] intervals.
-* The maximum acceleration to be acquired is ± 4 [G] and the resolution is 1 [mG].
-* The unit of air pressure to be acquired is [hPa].
-* After creating a new file, correct the RTC time with the GPS signal before data logging.
-* Data logging will not start until the RTC time correction using the GPS signal is complete. An accurate record of the time remains.
-* When the time is corrected, the GPS reception process stops. The GPS reception process will sleep until the next time adjustment.
-* The sensing data is stored in the SD card slot of CXD5602PWBEXT1.
+* Acceleratia and pressure data are recorded with 40[ms] time intervals.
+* The acceleration range is ± 4 [G] and the resolution is 1 [mG].
+* The unit of air pressure resolution is 1 [hPa].
+* After creating a new file, RTC is corrected with the GPS signal before data logging.
+* Data logging will not start until the RTC is corrected using the GPS signal.
+* When the time is corrected, the GPS reception process stops. The GPS reception process will sleep until the next time recording remains accurate within adjustments.
+* The data is stored in the SD card slot of CXD5602PWBEXT1.
 * A new file is created every 30 minutes.
 * Does not drive interrupts.
 
 # Quasi-Zenith Satellite Orbit
-QZSS which complements GPS is a system especially for usage in the Asia-Oceania regions, with a focus on Japan.
+QZSS, which complements GPS, is a system especially for usage in the Asia-Oceania regions, with a focus on Japan.
 
 ![isos7j00000003du](https://user-images.githubusercontent.com/49668780/66568620-ca238480-eba4-11e9-9387-fcfcd4ab10a6.jpg)  
 Source : https://qzss.go.jp/en/technical/technology/orbit.html
@@ -25,6 +24,9 @@ Source : https://qzss.go.jp/en/technical/technology/orbit.html
 # Disclaimer
 * This software is MIT license.
 * We cannot respond to inquiries.
+
+## License
+MIT
 
 # State transition
 The software performs the following state transitions: The LED corresponding to the status lights up.  
