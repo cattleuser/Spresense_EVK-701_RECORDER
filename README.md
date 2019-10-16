@@ -24,7 +24,7 @@ Source : https://qzss.go.jp/en/technical/technology/orbit.html
 # Disclaimer
 * This software is MIT license.  
 
-Copyright (c) 2019 Animal Silent Voice Project  
+Copyright (c) 2019 TechnoPro, Inc. TechnoPro Design Company  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
