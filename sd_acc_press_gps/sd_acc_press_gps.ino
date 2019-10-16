@@ -1,8 +1,32 @@
+/*
+MIT License
+
+Copyright (c) 2019 Animal Silent Voice Project
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 /**
  * @file sd_acc_press_gps.ino
  * @author Technopro
- * @brief Save cow acceleration to SD card.
- * @details It is a sketch for recording the behavior of the cow.
+ * @brief Save Animal acceleration and pressure to SD card.
+ * @details It is a sketch for recording the behavior of the Animal.
  */
 
 /**
@@ -27,20 +51,20 @@ static word led = 0;
 static word TimefixFlag = 0;
 static word state = eStateIdle;
 static word state_last = eStateIdle;
-static unsigned long seq = 0;                        /* sequence no    */
-static unsigned long time_current = 0;               /* to get current */
+static unsigned long seq = 0;                        /**< sequence no    */
+static unsigned long time_current = 0;               /**< to get current */
 
 static unsigned long time_past_alive = 0;
 static unsigned long time_past_file = 0;
-static unsigned long time_past_gps = 0;              /* to update gps  */
-static unsigned long time_past_sensor = 0;           /* to update buff */
-static unsigned long time_past_sensor_write = 0;     /* to write file  */
+static unsigned long time_past_gps = 0;              /**< to update gps  */
+static unsigned long time_past_sensor = 0;           /**< to update buff */
+static unsigned long time_past_sensor_write = 0;     /**< to write file  */
 
 static unsigned long time_interval_alive = 0;
 static unsigned long time_interval_file = 0;
-static unsigned long time_interval_gps = 0;          /* to update gps  */
-static unsigned long time_interval_sensor = 0;       /* to update buff */
-static unsigned long time_interval_sensor_write = 0; /* to write file  */
+static unsigned long time_interval_gps = 0;          /**< to update gps  */
+static unsigned long time_interval_sensor = 0;       /**< to update buff */
+static unsigned long time_interval_sensor_write = 0; /**< to write file  */
 
 static unsigned long time_counter = 0;
 static unsigned long BuffSize = 0;
