@@ -50,8 +50,8 @@ SOFTWARE.
 #define SENSOR_INTERVAL        40             /**< [ms] */
 #define SENSOR_INTERVAL_WRITE  4000           /**< [ms] */
 #define FILE_INTERVAL          1800000        /**< [ms] */
-#define GPS_INTERVAL           1000           /* [ms] */
-#define MY_TIMEZONE_IN_SECONDS (9 * 60 * 60)  /* JST[s] */
+#define GPS_INTERVAL           1000           /** [ms] */
+#define MY_TIMEZONE_IN_SECONDS (9 * 60 * 60)  /** JST[s] */
 
 /**
  * @enum LoopState
@@ -62,9 +62,9 @@ enum LoopState
   eStateIdle,
   eStateSetup,
   eStateRenewFile,
-  eStateGnss,  /**< Loop is activated */
-  eStateSensor,  /**< Loop is not activated */
-  eStateError,  /**< Reboot process */
+  eStateGnss,
+  eStateSensor,
+  eStateError,
   eStateWriteError
 };
 
@@ -92,8 +92,8 @@ typedef struct
   ParamSat      SatelliteSystem;  /**< Satellite system(GPS/GLONASS/ALL). */
   boolean       NmeaOutUart;      /**< Output NMEA message to UART(TRUE/FALSE). */
   boolean       NmeaOutFile;      /**< Output NMEA message to file(TRUE/FALSE). */
-  boolean       SensorOutUart;      /**< Output NMEA message to UART(TRUE/FALSE). */
-  boolean       SensorOutFile;      /**< Output NMEA message to file(TRUE/FALSE). */
+  boolean       SensorOutUart;    /**< Output NMEA message to UART(TRUE/FALSE). */
+  boolean       SensorOutFile;    /**< Output NMEA message to file(TRUE/FALSE). */
   unsigned int  IntervalSec;      /**< Positioning interval sec(1-300). */
   SpPrintLevel  UartDebugMessage; /**< Uart debug message(NONE/ERROR/WARNING/INFO). */
 } ConfigParam;
@@ -105,5 +105,5 @@ typedef struct
 /**
  * @brief Exported global functions (to be accessed by other files)
  */
- KX122 kx122(KX122_DEVICE_ADDRESS_1F);/* acceleration */
- BM1383AGLV bm1383aglv;/* barometor */
+ KX122 kx122(KX122_DEVICE_ADDRESS_1F); /**< acceleration */
+ BM1383AGLV bm1383aglv;                /**< barometor */
