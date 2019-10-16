@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Animal Silent Voice Project
+Copyright (c) 2019 TechnoPro, Inc. TechnoPro Design Company
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ SOFTWARE.
 
 /**
  * @file cow_log_sys.ino
- * @author Technopro
+ * @author TechnoPro, Inc. TechnoPro Design Company
  * @brief Save Animal acceleration and pressure to SD card.
  * @details It is a sketch for recording the behavior of the Animal.
  */
