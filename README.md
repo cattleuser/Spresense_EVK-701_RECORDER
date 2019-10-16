@@ -47,31 +47,32 @@ SOFTWARE.
 * We cannot respond to inquiries.
 
 # State transition
-The software performs the following state transitions: The LED corresponding to the status lights up.  
+The software performs state transition.  
+The status of LEDs are shown below.
 
 | State | Meaning | LED3 | LED2 | LED1 | LED0 |
 |:---|:---|:---|:---|:---|:---|
 | eStateIdle | System idle state | off | off | on | blinking |
 | eStateSetup | Setup state | off | on | off | off |
-| eStateRenewFile | File update status | off | on | on | blinking |
-| eStateGnss | GPS time data correction status | on | off | off | blinking |
-| eStateSensor | Sensor data acquisition status | on | off | on | blinking |
+| eStateRenewFile | File update state | off | on | on | blinking |
+| eStateGnss | GPS time data correction state | on | off | off | blinking |
+| eStateSensor | Sensor data acquisition state | on | off | on | blinking |
 | eStateError | Error occurred | on | on | off | hold |
 | eStateWriteError | Write error occurred | on | on | on | hold |
 
 # Data format
 The data stored on the SD card is in the following format.  
 
-| flag(*1) | Terminal number(*2) | hh:mm:ss.ss | Serial number | interval[ms] | Acc-X[G] | Acc-Y[G] | Acc-Z[G] | Barometric pressure[hPa] |
+| Flag(*1) | Terminal number(*2) | hh:mm:ss.ss | Serial number | Time interval[ms] | Acc-X[G] | Acc-Y[G] | Acc-Z[G] | Barometric pressure[hPa] |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 
 (*1)The meaning of the record. You can edit here.  
 (*2)Used when operating multiple terminals at the same time. You can edit here.  
 
 # Requirements
-**devices**
+**Devices**
 * SPRESENSE+CXD5602PWBEXT1  
-https://developer.sony.com/ja/develop/spresense/
+https://developer.sony.com/develop/spresense/
 * SPRESENSE-SENSOR-EVK-701  
 https://www.rohm.co.jp/support/spresense-add-on-board
 
@@ -92,7 +93,7 @@ The referenced sample is as follows.
 
 # How to use
 1. Set up SPRESENSE Arduino IDE is as follows.  
-https://developer.sony.com/ja/develop/spresense/  
+https://developer.sony.com/develop/spresense/  
 1. Connect CXD5602PWBEXT1 and SPRESENSE-SENSOR-EVK-701 to SPRESENSE.  
 1. Connect the SD card to CXD5602PWBEXT1.  
 1. When the power is turned on, the device starts up, the time is corrected by GPS, and the log is saved on the SD card.  
