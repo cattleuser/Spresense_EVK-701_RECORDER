@@ -4,36 +4,15 @@ Data logger for Sony's IoT computer SPRESENSE.
 There is a function to write data such as inertia sensor and time stamp to the SD card.
 The time is corrected with the GPS signal.
 
-**Required devices**
-* SPRESENSE+CXD5602PWBEXT1  
-https://developer.sony.com/ja/develop/spresense/
-* SPRESENSE-SENSOR-EVK-701  
-https://www.rohm.co.jp/support/spresense-add-on-board
-
-**Source of code**
-* spresense-arduino-compatible  
-https://github.com/sonydevworld/spresense-arduino-compatible  
-The referenced sample is as follows.  
-./Arduino15/packages/SPRESENSE/hardware/spresense/1.0.0/libraries/GNSS/examples/gnss_tracker  
-  * /gnss_file.h/gnss_file.cpp/gnss_nmea.h/gnss_nmea.cpp/gnss_tracker.h
-
-* SPRESENSE-SENSOR-EVK-701  
-https://github.com/RohmSemiconductor/Arduino  
-The referenced sample is as follows.  
-  * /BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
-
-* The code created for this project is as follows.  
-  * /cow_log.h/sd_acc_press_gps.ino
-
 # Features
-* A new file is created every 30 minutes.
-* After creating a new file, correct the RTC time with the GPS signal before data logging.
 * Compatibility with QZSS Michibiki.
-* The sensing data is stored in the SD card slot of CXD5602PWBEXT1.
-* Data logging will not start until the RTC time correction using the GPS signal is complete. An accurate record of the time remains.
 * The recorded acceleration and pressure are 40 [ms] intervals.
 * The maximum acceleration to be acquired is ± 4 [G] and the resolution is 1 [mG].
 * The unit of air pressure to be acquired is [hPa].
+* After creating a new file, correct the RTC time with the GPS signal before data logging.
+* Data logging will not start until the RTC time correction using the GPS signal is complete. An accurate record of the time remains.
+* The sensing data is stored in the SD card slot of CXD5602PWBEXT1.
+* A new file is created every 30 minutes.
 * Does not drive interrupts.
 
 # Quasi-Zenith Satellite Orbit
@@ -62,8 +41,33 @@ The software performs the following state transitions: The LED corresponding to 
 # Data format
 The data stored on the SD card is in the following format.  
 
-| flag | Terminal number | hh:mm:ss.ss | Serial number | interval[ms] | Acc-X[G] | Acc-Y[G] | Acc-Z[G] | Barometric pressure[hPa] |
+| flag(*1) | Terminal number(*2) | hh:mm:ss.ss | Serial number | interval[ms] | Acc-X[G] | Acc-Y[G] | Acc-Z[G] | Barometric pressure[hPa] |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
+
+(*1)The meaning of the record. You can edit here.
+(*2)Used when operating multiple terminals at the same time. You can edit here.
+
+# Requirements
+**devices**
+* SPRESENSE+CXD5602PWBEXT1  
+https://developer.sony.com/ja/develop/spresense/
+* SPRESENSE-SENSOR-EVK-701  
+https://www.rohm.co.jp/support/spresense-add-on-board
+
+**Source of code**
+* spresense-arduino-compatible  
+https://github.com/sonydevworld/spresense-arduino-compatible  
+The referenced sample is as follows.  
+./Arduino15/packages/SPRESENSE/hardware/spresense/1.0.0/libraries/GNSS/examples/gnss_tracker  
+  * /gnss_file.h/gnss_file.cpp/gnss_nmea.h/gnss_nmea.cpp/gnss_tracker.h
+
+* SPRESENSE-SENSOR-EVK-701  
+https://github.com/RohmSemiconductor/Arduino  
+The referenced sample is as follows.  
+  * /BM1383AGLV.h/BM1383AGLV.cpp/KX122.h/KX122.cpp
+
+* The code created for this project is as follows.  
+  * /cow_log.h/sd_acc_press_gps.ino
 
 # How to use
 1. Set up SPRESENSE Arduino IDE is as follows.  
