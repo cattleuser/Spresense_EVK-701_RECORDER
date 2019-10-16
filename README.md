@@ -23,6 +23,7 @@ Source : https://qzss.go.jp/en/technical/technology/orbit.html
 
 # Disclaimer
 * This software is MIT license.  
+
 Copyright (c) 2019 Animal Silent Voice Project  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
