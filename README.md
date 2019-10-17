@@ -8,12 +8,12 @@ The function of this data logger is to write inertia sensor data along with time
 * Data logging will not start until the RTC is corrected using the GPS signal.
 * When the time is corrected, the GPS reception process stops. The GPS reception process will sleep until the next time recording remains accurate within adjustments.
 * Compatibility with QZSS Michibiki.
-* Acceleratia and pressure data are recorded with 40[ms] time intervals.
-* The acceleration range is ± 4 [G] and the resolution is 1 [mG].
-* The unit of air pressure resolution is 1 [hPa].
 * The data is stored in the SD card slot of CXD5602PWBEXT1.
 * A new file is created every 30 minutes.
 * Does not drive interrupts.
+* Acceleratia and pressure data are recorded with 40[ms] time intervals.
+* The acceleration range is ± 4 [G] and the resolution is 1 [mG].
+* The unit of air pressure resolution is 1 [hPa].
 
 # Disclaimer
 * This software is MIT license.  
