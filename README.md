@@ -4,22 +4,16 @@ Data logger for Sony's IoT development board SPRESENSE.
 The function of this data logger is to write inertia sensor data along with time stamp. Time stamp data is corrected with GPS signal.
 
 # Features
+* After creating a new file, Real Time Clock (RTC) is corrected with the GPS signal before data logging.
+* Data logging will not start until the RTC is corrected using the GPS signal.
+* When the time is corrected, the GPS reception process stops. The GPS reception process will sleep until the next time recording remains accurate within adjustments.
 * Compatibility with QZSS Michibiki.
 * Acceleratia and pressure data are recorded with 40[ms] time intervals.
 * The acceleration range is ± 4 [G] and the resolution is 1 [mG].
 * The unit of air pressure resolution is 1 [hPa].
-* After creating a new file, Real Time Clock (RTC) is corrected with the GPS signal before data logging.
-* Data logging will not start until the RTC is corrected using the GPS signal.
-* When the time is corrected, the GPS reception process stops. The GPS reception process will sleep until the next time recording remains accurate within adjustments.
 * The data is stored in the SD card slot of CXD5602PWBEXT1.
 * A new file is created every 30 minutes.
 * Does not drive interrupts.
-
-# Quasi-Zenith Satellite Orbit
-QZSS, which complements GPS, is a system especially for usage in the Asia-Oceania regions, with a focus on Japan.
-
-![isos7j00000003du](https://user-images.githubusercontent.com/49668780/66568620-ca238480-eba4-11e9-9387-fcfcd4ab10a6.jpg)  
-Source : https://qzss.go.jp/en/technical/technology/orbit.html
 
 # Disclaimer
 * This software is MIT license.  
