@@ -60,8 +60,8 @@ The data stored on the SD card is in the following format.
 | Flag(*1) | Terminal number(*2) | hh:mm:ss.ss | Serial number | Time interval[ms] | Acc-X[G] | Acc-Y[G] | Acc-Z[G] | Barometric pressure[hPa] |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 
-(*1)The meaning of the record. You can edit on the file.. 
-(*2)Used when operating multiple terminals at the same time. You can edit on the file.  
+(*1)The meaning of the record. You can edit on the source code.  
+(*2)Used when operating multiple terminals at the same time. You can edit on the source code.  
 
 # Requirements
 **Devices**
