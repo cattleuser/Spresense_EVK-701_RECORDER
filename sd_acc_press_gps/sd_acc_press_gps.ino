@@ -66,12 +66,10 @@ static unsigned long time_interval_gps = 0;          /**< to update gps  */
 static unsigned long time_interval_sensor = 0;       /**< to update buff */
 static unsigned long time_interval_sensor_write = 0; /**< to write file  */
 
-static unsigned long time_counter = 0;
 static unsigned long BuffSize = 0;
 static unsigned long write_size = 0;
 static char FileNmeaTxt[OUTPUT_FILENAME_LEN] = {};   /**< Output file name */
 static char FileSensorTxt[OUTPUT_FILENAME_LEN] = {}; /**< Output file name */
-static char StringBuffer[STRING_BUFFER_SIZE] = {};
 static SpNavData NavData = {};
 static SpGnss Gnss;                                  /**< SpGnss object */
 static ConfigParam Parameter = {};                   /**< Configuration parameters */
@@ -669,8 +667,6 @@ static String MakeParameterString(ConfigParam *pConfigParam)
  */
 static void SetupPositioning(void)
 {
-  int FileCount;
-
   /* Set default Parameter. */
   Parameter.SatelliteSystem  = eSatGpsGlonassQz1c;
   Parameter.NmeaOutUart      = false;
