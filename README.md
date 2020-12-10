@@ -57,11 +57,10 @@ The status of LEDs are shown below.
 # Data format
 The data stored on the SD card is in the following format.  
 
-| Format version | Terminal number(*2) | YYYY/MM/DD hh:mm:ss.ss | Serial number | Time interval[ms] | Acc-X[G] | Acc-Y[G] | Acc-Z[G] | Barometric pressure[hPa] |
+| Format version | Terminal number(*1) | YYYY/MM/DD hh:mm:ss.ss | Serial number | Time interval[ms] | Acc-X[G] | Acc-Y[G] | Acc-Z[G] | Barometric pressure[hPa] |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
 
 (*1)The meaning of the record. You can edit on the source code.  
-(*2)Used when operating multiple terminals at the same time. You can edit on the source code.  
 
 # Requirements
 **Devices**
