@@ -7,7 +7,7 @@ The function of this data logger is to write inertia sensor data along with time
 * After creating a new file, Real Time Clock (RTC) is corrected with the GPS signal before data logging.
 * Data logging will not start until the RTC is corrected using the GPS signal.
 * When the time is corrected, the GPS reception process stops. The GPS reception process will sleep until the next time recording remains accurate within adjustments.
-* Acceleratia and pressure data are recorded with 40[ms] time intervals.
+* Acceleratia and pressure data are recorded with 20[ms] time intervals.
 * The data is stored in the SD card slot of CXD5602PWBEXT1.
 * Compatibility with QZSS Michibiki.
 * A new file is created every 30 minutes.
