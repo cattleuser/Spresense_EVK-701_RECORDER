@@ -80,7 +80,7 @@ void Led_isState()
         ledOn(PIN_LED1); ledOn(PIN_LED2); ledOff(PIN_LED3);
         break;
   
-      case eStateGnss:
+      case eStateGnssNonFix:
         ledOff(PIN_LED1); ledOff(PIN_LED2); ledOn(PIN_LED3);
         break;
   
@@ -115,7 +115,7 @@ void Led_isState()
         ledOn(PIN_LED1); ledOff(PIN_LED2); ledOff(PIN_LED3);
         break;
   
-      case eStateGnss:
+      case eStateGnssNonFix:
         ledOff(PIN_LED1); ledOn(PIN_LED2); ledOff(PIN_LED3);
         break;
 

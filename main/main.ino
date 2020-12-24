@@ -62,14 +62,16 @@ volatile static unsigned long time_past_alive = 0;
 volatile static unsigned long time_past_file = 0;
 volatile static unsigned long time_past_gps = 0;              /**< to update gps  */
 volatile static unsigned long time_past_sensor = 0;           /**< to update buff */
-volatile static unsigned long time_past_sensor_write = 0;     /**< to write file  */
 volatile static unsigned long time_interval_alive = 0;
 volatile static unsigned long time_interval_file = 0;
 volatile static unsigned long time_interval_gps = 0;          /**< to update gps  */
 volatile static unsigned long time_interval_sensor = 0;       /**< to update buff */
-volatile static unsigned long time_interval_sensor_write = 0; /**< to write file  */
 volatile static unsigned long BuffSize = 0;
 volatile static SpNavData NavData = {};
+sem_t sem;
+char SensorBuff[8192] = {};
+char SD_SensorBuff[8192] = {};
+static int records_num = 0;
 
 /**
  * @brief global APIs
@@ -113,6 +115,27 @@ static void Led_isAlive(void)
   else
   {
     /* Do nothing */
+  }
+}
+
+static int save_task(int argc, FAR char *argv[])
+{
+  while(1)
+  {
+    sem_wait(&sem);
+    /* Write Sensor Data. */
+    write_size = WriteChar(SD_SensorBuff, FileSensorTxt, (FILE_WRITE | O_APPEND));
+    /* Check result. */
+    if (write_size != strlen(SD_SensorBuff))
+    {
+      state = eStateWriteError;
+      Led_isState();
+    }
+    else
+    {
+      /* do nothing. */
+    }
+    SD_SensorBuff[0] = '\0';
   }
 }
 
@@ -161,6 +184,9 @@ void setup(void)
   {
     /* do nothing. */
   }
+
+  sem_init(&sem, 0, 0);
+  task_create("save_task", 90, 2048, save_task, NULL);
 
   state_last = eStateSetup;
   state = eStateRenewFile;
@@ -236,69 +262,123 @@ static void GpsProcessing(void)
   static char *pNmeaBuff     = NULL;
   String NmeaString = "";
 
-  /* Get NavData. */
-  Gnss.getNavData(&NavData);
-  SpGnssTime *time = &NavData.time;
-
-  /* check if time update */
-  if(Gnss.waitUpdate() && (NavData.posFixMode >= 1) && (time->year >= 2000))
+  /* GPS PROCESSING. */
+  time_interval_gps = time_current - time_past_gps;
+  if(time_interval_gps >= GPS_INTERVAL)
   {
-    /* If device can get the value of gps correctlv. */
-    /* Check if the acquired UTC time is accurate. */
-    /* get and evacuation RTC time to "now" */
-    RtcTime now = RTC.getTime();
+    time_past_gps = time_current; /*timer set.*/
+    
+    /* Get NavData. */
+    Gnss.getNavData(&NavData);
+    SpGnssTime *time = &NavData.time;
   
-    /* Convert SpGnssTime to RtcTime */
-    RtcTime gps(time->year, time->month, time->day, time->hour, time->minute, time->sec, time->usec * 1000);
-
-    gps += MY_TIMEZONE_IN_SECONDS;
-
-    /* Set the time difference */
-    diff = now - gps;
-    if (abs(diff) >= 1)
+    /* check if time update */
+    if(Gnss.waitUpdate() && (NavData.posFixMode >= 1) && (time->year >= 2000))
     {
-      /* set GPS time to RTC. */
-      RTC.setTime(gps);
-    }
-    else
-    {
-      /* Judged that time was corrected. */
-      TimefixFlag = 1;
-    }
-
-    /* Get Nmea Data. */
-    NmeaString = getNmeaGga(&NavData);
-
-    if (strlen(NmeaString.c_str()) == 0)
-    {
-      state = eStateError;
-      Led_isState();
-    }
-    else
-    {
-      /* Output Nmea Data. */
-      if (Parameter.NmeaOutUart == true)
+      /* If device can get the value of gps correctlv. */
+      /* Check if the acquired UTC time is accurate. */
+      /* get and evacuation RTC time to "now" */
+      RtcTime now = RTC.getTime();
+    
+      /* Convert SpGnssTime to RtcTime */
+      RtcTime gps(time->year, time->month, time->day, time->hour, time->minute, time->sec, time->usec * 1000);
+  
+      gps += MY_TIMEZONE_IN_SECONDS;
+  
+      /* Set the time difference */
+      diff = now - gps;
+      if (abs(diff) >= 1)
       {
-        /* To Uart. */
-        APP_PRINT(NmeaString.c_str());
+        /* set GPS time to RTC. */
+        RTC.setTime(gps);
       }
       else
       {
-        /* do nothing. */
+        /* Judged that time was corrected. */
+        TimefixFlag = 1;
       }
-    }
-
-    if (Parameter.NmeaOutFile == true)
-    {
-      /* To SDCard. */
-      BuffSize = NMEA_BUFFER_SIZE * 4;
-
-      if (pNmeaBuff == NULL)
+  
+      /* Get Nmea Data. */
+      NmeaString = getNmeaGga(&NavData);
+  
+      if (strlen(NmeaString.c_str()) == 0)
       {
-        /* Alloc buffer. */
-        pNmeaBuff = (char*)malloc(BuffSize);
+        state = eStateError;
+        Led_isState();
+      }
+      else
+      {
+        /* Output Nmea Data. */
+        if (Parameter.NmeaOutUart == true)
+        {
+          /* To Uart. */
+          APP_PRINT(NmeaString.c_str());
+        }
+        else
+        {
+          /* do nothing. */
+        }
+      }
+  
+      if (Parameter.NmeaOutFile == true)
+      {
+        /* To SDCard. */
+        BuffSize = NMEA_BUFFER_SIZE * 4;
+  
+        if (pNmeaBuff == NULL)
+        {
+          /* Alloc buffer. */
+          pNmeaBuff = (char*)malloc(BuffSize);
+          if (pNmeaBuff != NULL)
+          {
+            /* Clear Buffer */
+            pNmeaBuff[0] = 0x00;
+          }
+          else
+          {
+            /* do nothing. */
+          }
+        }
+        else
+        {
+          /* do nothing. */
+        }
+  
         if (pNmeaBuff != NULL)
         {
+          /* Store Nmea Data to buffer. */
+          strncat(pNmeaBuff, NmeaString.c_str(), BuffSize);
+        }
+        else
+        {
+          /* do nothing. */
+        }
+  
+        /* Check Sensor buffer. */
+        if(strlen(pNmeaBuff) > (BuffSize - NMEA_BUFFER_SIZE))
+        {
+          state = eStateError;
+          Led_isState();
+        }
+        else
+        {
+          /* do nothing. */
+        }
+      
+        if (pNmeaBuff != NULL)
+        {
+          /* Write Nmea Data. */
+          write_size = WriteChar(pNmeaBuff, FileNmeaTxt, (FILE_WRITE | O_APPEND));
+          /* Check result. */
+          if (write_size != strlen(pNmeaBuff))
+          {
+            while(1);
+          }
+          else
+          {
+            /* do nothing. */
+          }
+      
           /* Clear Buffer */
           pNmeaBuff[0] = 0x00;
         }
@@ -306,49 +386,6 @@ static void GpsProcessing(void)
         {
           /* do nothing. */
         }
-      }
-      else
-      {
-        /* do nothing. */
-      }
-
-      if (pNmeaBuff != NULL)
-      {
-        /* Store Nmea Data to buffer. */
-        strncat(pNmeaBuff, NmeaString.c_str(), BuffSize);
-      }
-      else
-      {
-        /* do nothing. */
-      }
-
-      /* Check Sensor buffer. */
-      if(strlen(pNmeaBuff) > (BuffSize - NMEA_BUFFER_SIZE))
-      {
-        state = eStateError;
-        Led_isState();
-      }
-      else
-      {
-        /* do nothing. */
-      }
-    
-      if (pNmeaBuff != NULL)
-      {
-        /* Write Nmea Data. */
-        write_size = WriteChar(pNmeaBuff, FileNmeaTxt, (FILE_WRITE | O_APPEND));
-        /* Check result. */
-        if (write_size != strlen(pNmeaBuff))
-        {
-          while(1);
-        }
-        else
-        {
-          /* do nothing. */
-        }
-    
-        /* Clear Buffer */
-        pNmeaBuff[0] = 0x00;
       }
       else
       {
@@ -368,53 +405,81 @@ static void GpsProcessing(void)
 
 static void SensorProcessing(void)
 {
-  static char* pSensorBuff = NULL;
   String SensorString = "";
+  static int records_num = 0;
 
-  /* Buffer Clear */
-  if(state_last == eStateGnss)
+  time_interval_sensor = time_current - time_past_sensor;
+  if(time_interval_sensor >= SENSOR_INTERVAL)
   {
-    pSensorBuff[0] = 0x00;
-  }
-  else
-  {
-    /* Do nothing. */
-  }
-
-  /* Get senser data here. */
-  SensorString = getSensor();
-
-  if (strlen(SensorString.c_str()) == 0)
-  {
-    state = eStateError;
-    Led_isState();
-  }
-  else
-  {
-    /* Output Sensor Data. */
-    if (Parameter.SensorOutUart == true)
+    time_past_sensor = time_current;
+    /* Buffer Clear */
+    if(state_last == eStateGnssNonFix)
     {
-      /* To Uart. */
-      APP_PRINT(SensorString.c_str());
+      SensorBuff[0] = '\0';
     }
     else
     {
-      /* do nothing. */
+      /* Do nothing. */
     }
-
-    if (Parameter.SensorOutFile == true)
+  
+    /* Get senser data here. */
+    SensorString = getSensor();
+  
+    if (strlen(SensorString.c_str()) == 0)
     {
-      /* To SDCard. */
-      BuffSize = SENSOR_BUFFER_SIZE * (SENSOR_INTERVAL_WRITE / SENSOR_INTERVAL);
-
-      if (pSensorBuff == NULL)
+      state = eStateError;
+      Led_isState();
+    }
+    else
+    {
+      /* Output Sensor Data. */
+      if (Parameter.SensorOutUart == true)
       {
-        /* Alloc buffer. */
-        pSensorBuff = (char*)malloc(BuffSize);
-        if (pSensorBuff != NULL)
+        /* To Uart. */
+        APP_PRINT(SensorString.c_str());
+      }
+      else
+      {
+        /* do nothing. */
+      }
+  
+      if (Parameter.SensorOutFile == true)
+      {
+        /* Check Sensor buffer. */
+        if((SENSOR_BUFFER_SIZE * STORE_RECORDS_NUM) > (sizeof(SensorBuff)))
         {
-          /* Clear Buffer */
-          pSensorBuff[0] = 0x00;
+          state = eStateError;
+          Led_isState();
+        }
+        else
+        {
+          /* do nothing. */
+        }
+        if (SensorBuff[0] != '\n')
+        {
+          /* Store Sensor Data to buffer. */
+          records_num += 1;
+          strncat(SensorBuff, SensorString.c_str(), strlen(SensorString.c_str()));
+        }
+        else
+        {
+          /* do nothing. */
+        }
+        /* Counter Check to Write. */
+        if(records_num >= STORE_RECORDS_NUM)
+        {
+          if (SensorBuff[0] != '\0')
+          {
+            //call task
+            records_num = 0;
+            strcpy(SD_SensorBuff, SensorBuff);
+            SensorBuff[0] = '\0';
+            sem_post(&sem);
+          }
+          else
+          {
+            /* do nothing .*/
+          }
         }
         else
         {
@@ -425,67 +490,11 @@ static void SensorProcessing(void)
       {
         /* do nothing. */
       }
-
-      if (pSensorBuff != NULL)
-      {
-        /* Store Sensor Data to buffer. */
-        strncat(pSensorBuff, SensorString.c_str(), BuffSize);
-      }
-      else
-      {
-        /* do nothing. */
-      }
-    }
-    else
-    {
-      /* do nothing. */
-    }
-
-    /* Check Sensor buffer. */
-    if(strlen(pSensorBuff) > (BuffSize - SENSOR_BUFFER_SIZE))
-    {
-      state = eStateError;
-      Led_isState();
-    }
-    else
-    {
-      /* do nothing. */
-    }
-  }
-
-  /* SENSER WRITE PROCESSING. */
-  time_interval_sensor_write = time_current - time_past_sensor_write;
-  /* Counter Check to Write. */
-  if(time_interval_sensor_write >= SENSOR_INTERVAL_WRITE)
-  {
-    time_past_sensor_write = time_current;
-
-    if (pSensorBuff != NULL)
-    {
-      /* Write Sensor Data. */
-      write_size = WriteChar(pSensorBuff, FileSensorTxt, (FILE_WRITE | O_APPEND));
-      /* Check result. */
-      if (write_size != strlen(pSensorBuff))
-      {
-        state = eStateWriteError;
-        Led_isState();
-      }
-      else
-      {
-        /* do nothing. */
-      }
-  
-      /* Clear Buffer */
-      pSensorBuff[0] = 0x00;
-    }
-    else
-    {
-      /* do nothing .*/
     }
   }
   else
   {
-    /* do nothing. */
+    /* Do nothing. */
   }
 }
 
@@ -563,6 +572,8 @@ void loop(void)
 {
   Watchdog.kick();
 
+  usleep(1);
+
   /* Check state. */
   time_current = millis();
 
@@ -577,8 +588,36 @@ void loop(void)
     /* do nothing. */
   }
 
+  /* RENEW FILE */
+  time_interval_file = time_current - time_past_file;
+  if(time_interval_file >= FILE_INTERVAL)
+  {
+    time_past_file = time_current;
+    state = eStateRenewFile;
+  }
+  else
+  {
+    /* do nothing. */
+  }
+
   switch(state)
   {
+    case  eStateSensor:  /**< Loop is not activated */
+      Led_isState();
+      if(state != state_last)
+      {
+        Gnss.stop();
+        Wire.begin();
+      }
+      else
+      {
+        /* do nothing. */
+      }
+      SensorProcessing();
+      state_last = eStateSensor;
+      state = eStateSensor;
+      break;
+    
     case  eStateIdle:
       /* dont't update state */
       /* state_last = eStateIdle; */
@@ -606,10 +645,10 @@ void loop(void)
       }
       UpdateFileNumber();
       state_last = eStateRenewFile;
-      state = eStateIdle;
+      state = eStateGnssNonFix;
       break;
 
-    case  eStateGnss:
+    case  eStateGnssNonFix:
       Led_isState();
       if(state != state_last)
       {
@@ -622,70 +661,16 @@ void loop(void)
         /* do nothing. */
       }
       GpsProcessing();
-      state_last = eStateGnss;
-      state = eStateIdle;
-      break;
-
-    case  eStateSensor:  /**< Loop is not activated */
-      Led_isState();
-      if(state != state_last)
+      state_last = eStateGnssNonFix;
+      if(TimefixFlag == 1)
       {
-        Gnss.stop();
-        Wire.begin();
+        state = eStateSensor;
       }
-      else
-      {
-        /* do nothing. */
-      }
-      SensorProcessing();
-      state_last = eStateSensor;
-      state = eStateIdle;
       break;
 
     default:
       state = eStateError;
       Led_isState();
       break;
-  }
-
-  /* RENEW FILE */
-  time_interval_file = time_current - time_past_file;
-  if(time_interval_file >= FILE_INTERVAL)
-  {
-    time_past_file = time_current;
-    state = eStateRenewFile;
-  }
-  else
-  {
-    /* do nothing. */
-  }
-
-  if(TimefixFlag == 1)
-  {
-    /* SENSOR PROCESSING. */
-    time_interval_sensor = time_current - time_past_sensor;
-    if(time_interval_sensor >= SENSOR_INTERVAL)
-    {
-      time_past_sensor = time_current;
-      state = eStateSensor;
-    }
-    else
-    {
-      /* do nothing. */
-    }
-  }
-  else
-  { 
-    /* GPS PROCESSING. */
-    time_interval_gps = time_current - time_past_gps;
-    if(time_interval_gps >= GPS_INTERVAL)
-    {
-      time_past_gps = time_current;
-      state = eStateGnss;
-    }
-    else
-    {
-      /* do nothing. */
-    }
   }
 }

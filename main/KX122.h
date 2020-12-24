@@ -50,7 +50,7 @@
 #define KX122_IIR_BYPASS          (1 << 7)
 
 #define KX122_CNTL1_VAL           (KX122_CNTL1_RES | KX122_CNTL1_GSEL_4G)
-#define KX122_ODCNTL_VAL          (KX122_ODCNTL_OSA_100HZ)
+#define KX122_ODCNTL_VAL          (KX122_ODCNTL_OSA_50HZ)
 
 class KX122
 {

@@ -73,9 +73,9 @@ SOFTWARE.
 #define SEPARATOR              0x0A           /**< Separator */
 
 /* Interval settings */
-#define SENSOR_INTERVAL        40             /**< [ms] */
-#define SENSOR_INTERVAL_WRITE  1000           /**< [ms] */
-#define FILE_INTERVAL          1800000         /**< [ms] */
+#define SENSOR_INTERVAL        20             /**< [ms] */
+#define STORE_RECORDS_NUM      25
+#define FILE_INTERVAL          1800000        /**< [ms] */
 #define GPS_INTERVAL           1000           /**< [ms] */
 
 /* GNSS CONFIG */
@@ -84,7 +84,7 @@ SOFTWARE.
 #define INTERVAL_SEC           1              /** true 1, false 0 */
 
 /* LED debug settings */
-#define LED_DEBUG_MODE         1              /** set 1 true, set 0 false */
+#define LED_DEBUG_MODE         0              /** set 1 true, set 0 false */
 
 /**
  * @enum LoopState
@@ -95,7 +95,7 @@ enum LoopState
   eStateIdle,
   eStateSetup,
   eStateRenewFile,
-  eStateGnss,
+  eStateGnssNonFix,
   eStateSensor,
   eStateError,
   eStateWriteError
