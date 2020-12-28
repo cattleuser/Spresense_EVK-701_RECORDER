@@ -72,10 +72,6 @@ void Led_isState()
         ledOn(PIN_LED1); ledOff(PIN_LED2); ledOff(PIN_LED3);
         break;
   
-      case eStateSetup:
-        ledOff(PIN_LED1); ledOn(PIN_LED2); ledOff(PIN_LED3);
-        break;
-  
       case eStateRenewFile:
         ledOn(PIN_LED1); ledOn(PIN_LED2); ledOff(PIN_LED3);
         break;
@@ -111,10 +107,6 @@ void Led_isState()
   {
     switch(state)
     {
-      case eStateSetup:
-        ledOn(PIN_LED1); ledOff(PIN_LED2); ledOff(PIN_LED3);
-        break;
-  
       case eStateGnssNonFix:
         ledOff(PIN_LED1); ledOn(PIN_LED2); ledOff(PIN_LED3);
         break;

@@ -74,9 +74,11 @@ SOFTWARE.
 
 /* Interval settings */
 #define SENSOR_INTERVAL        20             /**< [ms] */
-#define STORE_RECORDS_NUM      25
+#define STORE_RECORDS_NUM      25             /**< 1 to 1024 */
 #define FILE_INTERVAL          1800000        /**< [ms] */
 #define GPS_INTERVAL           1000           /**< [ms] */
+#define SENSORBUFF             STORE_RECORDS_NUM * STRING_BUFFER_SIZE + STRING_BUFFER_SIZE
+
 
 /* GNSS CONFIG */
 #define SATELLIT_ESYSTEM       eSatGpsGlonassQz1c /** ParamSat */
@@ -93,7 +95,6 @@ SOFTWARE.
 enum LoopState
 {
   eStateIdle,
-  eStateSetup,
   eStateRenewFile,
   eStateGnssNonFix,
   eStateSensor,

@@ -35,13 +35,12 @@ SOFTWARE.
 #include "main.h"
 
 /**
- * @brief Private gloval variables and functions
+ * @brief gloval variables and functions
  */
 ConfigParam Parameter = {};                   /**< Configuration parameters */
 word state = eStateIdle;
 SpGnss Gnss;                                  /**< SpGnss object */
 unsigned long write_size = 0;
-void Led_isState();
 
 /**
  * @brief Private private variables and functions
@@ -68,24 +67,25 @@ volatile static unsigned long time_interval_gps = 0;          /**< to update gps
 volatile static unsigned long time_interval_sensor = 0;       /**< to update buff */
 volatile static unsigned long BuffSize = 0;
 volatile static SpNavData NavData = {};
-sem_t sem;
-char SensorBuff[8192] = {};
-char SD_SensorBuff[8192] = {};
-static int records_num = 0;
+volatile static char SensorBuff[SENSORBUFF] = {};
+volatile static int records_num = 0;
 
 /**
  * @brief global APIs
  */
 void SetupPositioning(void);
+void Led_isState(void);
 
 /**
  * @brief private APIs
  */
 static void Led_isAlive(void);
+static void Led_AliveBlink(void);
 static void UpdateFileNumber(void);
 static String getSensor(void);
 static void GpsProcessing(void);
 static void SensorProcessing(void);
+static void CheckFileRenew(void);
 static KX122 kx122(KX122_DEVICE_ADDRESS_1F); /**< acceleration */
 static BM1383AGLV bm1383aglv;                /**< barometor */
 
@@ -118,79 +118,33 @@ static void Led_isAlive(void)
   }
 }
 
-static int save_task(int argc, FAR char *argv[])
+static void Led_AliveBlink(void)
 {
-  while(1)
+  time_interval_alive = time_current - time_past_alive;
+  if(time_interval_alive >= 1000)
   {
-    sem_wait(&sem);
-    /* Write Sensor Data. */
-    write_size = WriteChar(SD_SensorBuff, FileSensorTxt, (FILE_WRITE | O_APPEND));
-    /* Check result. */
-    if (write_size != strlen(SD_SensorBuff))
-    {
-      state = eStateWriteError;
-      Led_isState();
-    }
-    else
-    {
-      /* do nothing. */
-    }
-    SD_SensorBuff[0] = '\0';
-  }
-}
-
-/**
-\ * @brief Activate GNSS device and setup positioning
- */
-void setup(void)
-{
-  Watchdog.begin();
-  Watchdog.start(20000);
-
-  state = eStateSetup;
-  Led_isState();
-
-  /* Set serial baudeate. */
-  Serial.begin(SERIAL_BAUDRATE);
-  while (!Serial);
-
-  LowPower.begin();
-  LowPower.clockMode(CLOCK_MODE_156MHz);                  
-
-  /* Initialize gps */
-  SetupPositioning();
-
-  /* Initialize acceleration */
-  Wire.begin();
-  rc = kx122.init();
-  if (rc != 0)
-  {
-    state = eStateError;
-    Led_isState();
-  }
-  else
-  {
-   /* do nothing. */
-  }
-
-  /* barometer & temperature */
-  rc = bm1383aglv.init();
-  if (rc != 0)
-  {
-    state = eStateError;
-    Led_isState();
+    time_past_alive = time_current;
+    Led_isAlive();
   }
   else
   {
     /* do nothing. */
   }
+}
 
-  sem_init(&sem, 0, 0);
-  task_create("save_task", 90, 2048, save_task, NULL);
-
-  state_last = eStateSetup;
-  state = eStateRenewFile;
-  Led_isState();
+static void CheckFileRenew(void)
+{
+  /* RENEW FILE */
+  time_interval_file = time_current - time_past_file;
+  if(time_interval_file >= FILE_INTERVAL)
+  {
+    time_past_file = time_current;
+    state = eStateRenewFile;
+  }
+  else
+  {
+    /* do nothing. */
+  }
 }
 
 /**
@@ -445,40 +399,30 @@ static void SensorProcessing(void)
   
       if (Parameter.SensorOutFile == true)
       {
-        /* Check Sensor buffer. */
-        if((SENSOR_BUFFER_SIZE * STORE_RECORDS_NUM) > (sizeof(SensorBuff)))
-        {
-          state = eStateError;
-          Led_isState();
-        }
-        else
-        {
-          /* do nothing. */
-        }
-        if (SensorBuff[0] != '\n')
-        {
-          /* Store Sensor Data to buffer. */
-          records_num += 1;
-          strncat(SensorBuff, SensorString.c_str(), strlen(SensorString.c_str()));
-        }
-        else
-        {
-          /* do nothing. */
-        }
+        records_num += 1;
+        strncat(SensorBuff, SensorString.c_str(), strlen(SensorString.c_str()));
+
         /* Counter Check to Write. */
         if(records_num >= STORE_RECORDS_NUM)
         {
           if (SensorBuff[0] != '\0')
           {
-            //call task
-            records_num = 0;
-            strcpy(SD_SensorBuff, SensorBuff);
-            SensorBuff[0] = '\0';
-            sem_post(&sem);
+            write_size = WriteChar(SensorBuff, FileSensorTxt, (FILE_WRITE | O_APPEND));
+            /* Check result. */
+            if (write_size == strlen(SensorBuff))
+            {
+              records_num = 0;
+              SensorBuff[0] = '\0'; 
+            }
+            else
+            {
+              state = eStateWriteError;
+              Led_isState();
+            }
           }
           else
           {
-            /* do nothing .*/
+            /* do nothing. */
           }
         }
         else
@@ -554,56 +498,68 @@ static String getSensor(void)
 }
 
 /**
- * @brief GNSS tracker loop
- * 
- * @details Positioning is performed for the first 300 seconds after setup.
- *          After that, in each loop processing, it sleeps for SleepSec 
- *          seconds and performs positioning ActiveSec seconds. 
- *          The gnss_tracker use SatelliteSystem sattelites for positioning.\n\n
- *  
- *          Positioning result is notificated in every IntervalSec second.
- *          The result formatted to NMEA will be saved on SD card if the 
- *          parameter NmeaOutFile is TRUE, or/and output to UART if the 
- *          parameter NmeaOutUart is TRUE. NMEA is buffered for each 
- *          notification. Write at once when ActiveSec completes. If SleepSec 
- *          is set to 0, positioning is performed continuously.
+\ * @brief Activate GNSS device and Sensor modules.
+ */
+void setup(void)
+{
+  Watchdog.begin();
+  Watchdog.start(20000);
+
+  Led_isState();
+
+  /* Set serial baudeate. */
+  Serial.begin(SERIAL_BAUDRATE);
+  while (!Serial);
+
+  LowPower.begin();
+  LowPower.clockMode(CLOCK_MODE_156MHz);                  
+
+  /* Initialize gps */
+  SetupPositioning();
+
+  /* Initialize acceleration */
+  Wire.begin();
+  rc = kx122.init();
+  if (rc != 0)
+  {
+    state = eStateError;
+    Led_isState();
+  }
+  else
+  {
+   /* do nothing. */
+  }
+
+  /* barometer & temperature */
+  rc = bm1383aglv.init();
+  if (rc != 0)
+  {
+    state = eStateError;
+    Led_isState();
+  }
+  else
+  {
+    /* do nothing. */
+  }
+
+  state = eStateRenewFile;
+  Led_isState();
+}
+
+/**
+ * @brief Main loop
  */
 void loop(void)
 {
   Watchdog.kick();
-
-  usleep(1);
-
-  /* Check state. */
   time_current = millis();
-
-  time_interval_alive = time_current - time_past_alive;
-  if(time_interval_alive >= 1000)
-  {
-    time_past_alive = time_current;
-    Led_isAlive();
-  }
-  else
-  {
-    /* do nothing. */
-  }
-
-  /* RENEW FILE */
-  time_interval_file = time_current - time_past_file;
-  if(time_interval_file >= FILE_INTERVAL)
-  {
-    time_past_file = time_current;
-    state = eStateRenewFile;
-  }
-  else
-  {
-    /* do nothing. */
-  }
+  Led_AliveBlink();
+  Led_isState();
+  CheckFileRenew();
 
   switch(state)
   {
     case  eStateSensor:  /**< Loop is not activated */
-      Led_isState();
       if(state != state_last)
       {
         Gnss.stop();
@@ -614,24 +570,11 @@ void loop(void)
         /* do nothing. */
       }
       SensorProcessing();
+      /* Task  */
       state_last = eStateSensor;
-      state = eStateSensor;
-      break;
-    
-    case  eStateIdle:
-      /* dont't update state */
-      /* state_last = eStateIdle; */
-      state = eStateIdle;
-      break;
-
-    case  eStateSetup:
-      Led_isState();
-      state_last = eStateSetup;
-      state = eStateIdle;
       break;
 
     case  eStateRenewFile:
-      Led_isState();
       if(state != state_last)
       {
         TimefixFlag = 0;
@@ -649,7 +592,6 @@ void loop(void)
       break;
 
     case  eStateGnssNonFix:
-      Led_isState();
       if(state != state_last)
       {
         Wire.end();
@@ -662,6 +604,7 @@ void loop(void)
       }
       GpsProcessing();
       state_last = eStateGnssNonFix;
+TimefixFlag = 1;
       if(TimefixFlag == 1)
       {
         state = eStateSensor;
