@@ -35,7 +35,7 @@ SOFTWARE.
 #include "main.h"
 
 /**
- * @brief gloval variables and functions
+ * @brief gloval variables
  */
 ConfigParam Parameter = {};                   /**< Configuration parameters */
 word state = eStateIdle;
@@ -43,7 +43,7 @@ SpGnss Gnss;                                  /**< SpGnss object */
 unsigned long write_size = 0;
 
 /**
- * @brief Private private variables and functions
+ * @brief private variables
  */
 volatile static char rc = 0;/* flag */
 volatile static char IndexData[INDEX_FILE_SIZE] = {};
@@ -73,6 +73,7 @@ volatile static int records_num = 0;
 /**
  * @brief global APIs
  */
+String getNmeaGga(SpNavData* pNavData);
 void SetupPositioning(void);
 void Led_isState(void);
 
@@ -407,7 +408,7 @@ static void SensorProcessing(void)
         {
           if (SensorBuff[0] != '\0')
           {
-            write_size = WriteChar(SensorBuff, FileSensorTxt, (FILE_WRITE | O_APPEND));
+            write_size = WriteSD(SensorBuff, strlen(SensorBuff));
             /* Check result. */
             if (write_size == strlen(SensorBuff))
             {
@@ -564,6 +565,7 @@ void loop(void)
       {
         Gnss.stop();
         Wire.begin();
+        OpenSD(FileSensorTxt, (FILE_WRITE | O_APPEND));
       }
       else
       {
@@ -577,6 +579,7 @@ void loop(void)
     case  eStateRenewFile:
       if(state != state_last)
       {
+        CloseSD();
         TimefixFlag = 0;
         RTC.end();
         Gnss.stop();

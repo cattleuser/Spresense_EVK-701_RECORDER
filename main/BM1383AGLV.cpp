@@ -21,8 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 ******************************************************************************/
-#include <Wire.h>
-#include "Arduino.h"
+#include "main.h"
 #include "BM1383AGLV.h"
 
 BM1383AGLV::BM1383AGLV(void)

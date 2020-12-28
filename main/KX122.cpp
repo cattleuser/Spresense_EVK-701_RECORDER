@@ -17,8 +17,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 ******************************************************************************/
-#include <Wire.h>
-#include <Arduino.h>
+#include "main.h"
 #include "KX122.h"
 
 KX122::KX122(int slave_address)

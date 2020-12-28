@@ -23,13 +23,17 @@
  * @brief NMEA's GGA sentence
  */
 
-/* include the GNSS library */
-#include <GNSS.h>
+#include "main.h"
 
 #define CORIDNATE_TYPE_LATITUDE   0  /**< Coordinate type latitude */
 #define CORIDNATE_TYPE_LONGITUDE  1  /**< Coordinate type longitude */
 
 #define STRING_BUFFER_SIZE  128      /**< Sentence buffer size */
+
+/**
+ * @brief global APIs
+ */
+extern String getNmeaGga(SpNavData* pNavData);
 
 /**
  * @brief Calculate the checksum and add it to the end.
