@@ -266,7 +266,7 @@ static void GpsProcessing(void)
         if (Parameter.NmeaOutUart == true)
         {
           /* To Uart. */
-          APP_PRINT(NmeaString.c_str());
+          Serial.print(NmeaString.c_str());
         }
         else
         {
@@ -390,7 +390,7 @@ static void SensorProcessing(void)
       if (Parameter.SensorOutUart == true)
       {
         /* To Uart. */
-        APP_PRINT(SensorString.c_str());
+        Serial.print(SensorString.c_str());
       }
       else
       {
@@ -604,7 +604,6 @@ void loop(void)
       }
       GpsProcessing();
       state_last = eStateGnssNonFix;
-TimefixFlag = 1;
       if(TimefixFlag == 1)
       {
         state = eStateSensor;

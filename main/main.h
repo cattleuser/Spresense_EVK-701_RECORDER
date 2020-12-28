@@ -41,7 +41,6 @@ SOFTWARE.
 #include <RTC.h>
 #include <LowPower.h>
 #include <Watchdog.h>
-#include "gnss_tracker.h"
 #include "gnss_nmea.h"
 #include "gnss_file.h"
 #include "KX122.h"
@@ -74,7 +73,7 @@ SOFTWARE.
 
 /* Interval settings */
 #define SENSOR_INTERVAL        20             /**< [ms] */
-#define STORE_RECORDS_NUM      25             /**< 1 to 1024 */
+#define STORE_RECORDS_NUM      2048           /**< Allocation size of SD should be larger than CSV size. */
 #define FILE_INTERVAL          1800000        /**< [ms] */
 #define GPS_INTERVAL           1000           /**< [ms] */
 #define SENSORBUFF             STORE_RECORDS_NUM * STRING_BUFFER_SIZE + STRING_BUFFER_SIZE
@@ -87,6 +86,8 @@ SOFTWARE.
 
 /* LED debug settings */
 #define LED_DEBUG_MODE         0              /** set 1 true, set 0 false */
+
+//Serial.print(c);                            /**< %Print log */
 
 /**
  * @enum LoopState

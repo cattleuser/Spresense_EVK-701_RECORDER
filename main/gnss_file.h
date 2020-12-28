@@ -45,7 +45,7 @@ boolean BeginSDCard(void);
  * @param [in] flag File access mode
  * @return Bytes written
  */
-int WriteBinary(const char* pBuff, const char* pName, unsigned long write_size, int flag);
+volatile int WriteBinary(const char* pBuff, const char* pName, unsigned long write_size, int flag);
 
 /**
  * @brief Write character string data to SD card.

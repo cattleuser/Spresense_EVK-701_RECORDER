@@ -332,10 +332,6 @@ static int ReadParameter(ConfigParam *pConfigParam)
   pReadBuff = (char*)malloc(CONFIG_FILE_SIZE);
   if (pReadBuff == NULL)
   {
-    APP_PRINT_E("alloc error:");
-    APP_PRINT_E(CONFIG_FILE_NAME);
-    APP_PRINT_E("\n");
-
     return -1;
   }
   else
@@ -347,10 +343,6 @@ static int ReadParameter(ConfigParam *pConfigParam)
   ReadSize = ReadChar(pReadBuff, CONFIG_FILE_SIZE, CONFIG_FILE_NAME, FILE_READ);
   if (ReadSize == 0)
   {
-    APP_PRINT_E("read error:");
-    APP_PRINT_E(CONFIG_FILE_NAME);
-    APP_PRINT_E("\n");
-
     return -1;
   }
   else
@@ -536,8 +528,6 @@ int SetupParameter(void)
 
   /* Print parameter. */
   ParamString = MakeParameterString(&Parameter);
-  APP_PRINT(ParamString.c_str());
-  APP_PRINT("\n\n");
 
   return ret;
 }
@@ -593,8 +583,6 @@ extern void SetupPositioning(void)
   }
   else
   {
-    APP_PRINT_I("Gnss begin OK.\n");
-
     switch (Parameter.SatelliteSystem)
     {
     case eSatGps:
