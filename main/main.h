@@ -54,7 +54,7 @@ SOFTWARE.
 /* Output settings */
 #define NMEA_OUT_UART          0              /** true 1, false 0 */
 #define NMEA_OUT_FILE          0              /** true 1, false 0 */
-#define SENSOR_OUT_UART        1              /** true 1, false 0 */
+#define SENSOR_OUT_UART        0              /** true 1, false 0 */
 #define SENSOR_OUT_FILE        1              /** true 1, false 0 */
 
 #define UART_DEBUG_MESSAGE     PrintNone
@@ -74,8 +74,8 @@ SOFTWARE.
 #define SEPARATOR              0x0A           /**< Separator */
 
 /* Interval settings */
-#define SENSOR_INTERVAL        40             /**< [ms] */
-#define STORE_RECORDS_NUM      5              /**< Allocation size of SD should be larger than CSV size. */
+#define SENSOR_INTERVAL        20             /**< [ms] */
+#define STORE_RECORDS_NUM      1              /**< Allocation size of SD should be larger than CSV size. */
                                               /**< Confirmed to operate at 50 Hz with class 10 SD. */
                                               /**< Different speed in your environment.*/
 #define FILE_INTERVAL          1800000        /**< [ms] */
